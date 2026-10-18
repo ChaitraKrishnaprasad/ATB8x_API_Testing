@@ -1,0 +1,253 @@
+{
+  "info": {
+    "_postman_id": "d05798bf-0414-447d-b1bd-92ae80b5e504",
+    "name": "API Practice TasksTASK001_Project: User Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "28398995",
+    "_collection_link": "https://go.postman.co/collection/28398995-d05798bf-0414-447d-b1bd-92ae80b5e504?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get_UserSearch_TC_01",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Tc_01_Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_02_Response must be in JSON format\", function () {\r",
+              "    pm.response.to.be.json;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_03_Response must contain id, name, username, email, and address\", function () {\r",
+              "    pm.expect(pm.response.json()).to.have.property('id');\r",
+              "    pm.expect(pm.response.json()).to.have.property('name');\r",
+              "    pm.expect(pm.response.json()).to.have.property('username');\r",
+              "    pm.expect(pm.response.json()).to.have.property('email');\r",
+              "    pm.expect(pm.response.json()).to.have.property('address');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_04_Returned User ID must match the requested User ID\", function () {\r",
+              "pm.expect(data.id).to.eql(3);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_05_Email must have a valid basic format\", function () {\r",
+              "     pm.expect(data.email).to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"TC_06_Response time must be below 2000 ms for this exercise\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+              "    \r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/users/3",
+          "protocol": "https",
+          "host": [
+            "jsonplaceholder",
+            "typicode",
+            "com"
+          ],
+          "path": [
+            "users",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get_UserSearch_TC_03",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Tc_01_Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_02_Response must be in JSON format\", function () {\r",
+              "    pm.response.to.be.json;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_03_Response must contain id, name, username, email, and address\", function () {\r",
+              "    pm.expect(pm.response.json()).to.have.property('id');\r",
+              "    pm.expect(pm.response.json()).to.have.property('name');\r",
+              "    pm.expect(pm.response.json()).to.have.property('username');\r",
+              "    pm.expect(pm.response.json()).to.have.property('email');\r",
+              "    pm.expect(pm.response.json()).to.have.property('address');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_04_Returned User ID must match the requested User ID\", function () {\r",
+              "pm.expect(data.id).to.eql(3);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_05_Email must have a valid basic format\", function () {\r",
+              "     pm.expect(data.email).to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"TC_06_Response time must be below 2000 ms for this exercise\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+              "    \r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/users/3",
+          "protocol": "https",
+          "host": [
+            "jsonplaceholder",
+            "typicode",
+            "com"
+          ],
+          "path": [
+            "users",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get_UserSearch_TC_05",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Tc_01_Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_02_Response must be in JSON format\", function () {\r",
+              "    pm.response.to.be.json;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_03_Response must contain id, name, username, email, and address\", function () {\r",
+              "    pm.expect(pm.response.json()).to.have.property('id');\r",
+              "    pm.expect(pm.response.json()).to.have.property('name');\r",
+              "    pm.expect(pm.response.json()).to.have.property('username');\r",
+              "    pm.expect(pm.response.json()).to.have.property('email');\r",
+              "    pm.expect(pm.response.json()).to.have.property('address');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_04_Returned User ID must match the requested User ID\", function () {\r",
+              "pm.expect(data.id).to.eql(5);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_05_Email must have a valid basic format\", function () {\r",
+              "     pm.expect(data.email).to.match(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"TC_06_Response time must be below 2000 ms for this exercise\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+              "    \r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/users/5",
+          "protocol": "https",
+          "host": [
+            "jsonplaceholder",
+            "typicode",
+            "com"
+          ],
+          "path": [
+            "users",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get_UserSearch_TC_Invalid Userid",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "\r",
+              "pm.test(\"TC_07 - Invalid User ID returns 404\", function () {\r",
+              "    pm.response.to.have.status(404);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_08 - Response is JSON\", function () {\r",
+              "    pm.response.to.be.json;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_09 - Response is empty JSON object\", function () {\r",
+              "    const data = pm.response.json();\r",
+              "    pm.expect(data).to.deep.equal({});\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_10 - Response time below 2000ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://jsonplaceholder.typicode.com/users/999",
+          "protocol": "https",
+          "host": [
+            "jsonplaceholder",
+            "typicode",
+            "com"
+          ],
+          "path": [
+            "users",
+            "999"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
