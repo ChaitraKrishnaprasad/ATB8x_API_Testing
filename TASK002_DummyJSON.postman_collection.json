@@ -1,0 +1,441 @@
+{
+  "info": {
+    "_postman_id": "f439a33f-897c-42fd-8066-7ed721fe327b",
+    "name": "TASK002_DummyJSON",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "28398995",
+    "_collection_link": "https://go.postman.co/collection/28398995-f439a33f-897c-42fd-8066-7ed721fe327b?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "TC_01_Valid_Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();\r",
+              "\r",
+              "pm.test(\"TC_01_Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_02_Response time is less than 2000ms\", function () {\r",
+              "        pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+              "    });\r",
+              "\r",
+              "\r",
+              "pm.test(\"TC_03_Access Token exists\", function(){\r",
+              "    pm.expect(data).to.have.property(\"accessToken\")\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_04_User ID is returned\", function () {\r",
+              "    pm.expect(data).to.have.property(\"id\");\r",
+              "    pm.expect(data.id).to.eql(1);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_05_Username is returned\", function () {\r",
+              "    pm.expect(data).to.have.property(\"username\")\r",
+              "});\r",
+              "pm.test(\"TC_06_Access token is not empty\", function () {\r",
+              "    pm.expect(data.accessToken).to.be.a(\"string\");\r",
+              "    pm.expect(data.accessToken).to.not.be.empty;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_07_User email is returned\", function () {\r",
+              "    pm.expect(data).to.have.property(\"email\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_08_Refresh Token exists\", function(){\r",
+              "    pm.expect(data).to.have.property(\"refreshToken\")\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n{\r\n  \"username\": \"emilys\",\r\n  \"password\": \"emilyspass\",\r\n  \"expiresInMins\": 30\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://dummyjson.com/auth/login",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "TC_02_Invalid_Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();\r",
+              "\r",
+              "pm.test(\"TC_09_Status code is 400\", function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_10_Error message is correct\", function () {\r",
+              "    pm.expect(data.message).to.eql(\"Invalid credentials\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_11_Access Token is not returned\", function() {\r",
+              "    pm.expect(data).to.not.have.property(\"accessToken\")\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_12_Refresh Token is not returned\", function () {\r",
+              "    pm.expect(data).to.not.have.property(\"refreshToken\")\r",
+              "});\r",
+              "\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n{\r\n  \"username\": \"emilys\",\r\n  \"password\": \"WrongPassword123\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://dummyjson.com/auth/login",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "TC_03_Unregistered_Username",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();\r",
+              "\r",
+              "pm.test(\"TC_13_Status code is 400\", function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_14_Verify the Error message is correct\", function () {\r",
+              "    pm.expect(data.message).to.eql(\"Invalid credentials\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_15_Access Token is not returned\", function() {\r",
+              "    pm.expect(data).to.not.have.property(\"accessToken\")\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_16_Refresh Token is not returned\", function () {\r",
+              "    pm.expect(data).to.not.have.property(\"refreshToken\")\r",
+              "});\r",
+              "\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n{\r\n  \"username\": \"unknown_user_98765\",\r\n  \"password\": \"WrongPassword123\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://dummyjson.com/auth/login",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "TC_04 Empty Username",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();\r",
+              "\r",
+              "pm.test(\"TC_17_Status code is 400\", function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_18_Response message is 'Username and password required'\", function () {\r",
+              "    pm.expect(data.message).to.eql(\"Username and password required\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_19_accessToken is absent\", function() {\r",
+              "    pm.expect(data).to.not.have.property(\"accessToken\")\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_20_refreshToken is absent\", function() {\r",
+              "    pm.expect(data).to.not.have.property(\"refreshToken\")\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n\r\n{\r\n  \"username\": \"\",\r\n  \"password\": \"emilyspass\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://dummyjson.com/auth/login",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "TC_05: Empty Password",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();\r",
+              "\r",
+              "pm.test(\"TC_21_Verify HTTP status code is 400\", function() {\r",
+              "    pm.response.to.have.status(400)\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_22_Verify error message is Username and password required\", function() {\r",
+              "    pm.expect(data.message).to.eql(\"Username and password required\")\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_23_Verify accessToken is absent\", function(){\r",
+              "    pm.expect(data).to.not.have.property(\"accessToken\")\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_24_Verify refreshToken is absent\", function(){\r",
+              "    pm.expect(data).to.not.have.property(\"refreshToken\")\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"emilys\",\r\n  \"password\": \"\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://dummyjson.com/auth/login",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "TC_06: Both Username and Password Empty",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();\r",
+              "\r",
+              "pm.test(\"TC_25_Verify HTTP status code is 400\", function() {\r",
+              "    pm.response.to.have.status(400)\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_26_Verify error message is Username and password required\", function() {\r",
+              "    pm.expect(data.message).to.eql(\"Username and password required\")\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_27_Verify accessToken is absent\", function(){\r",
+              "    pm.expect(data).to.not.have.property(\"accessToken\")\r",
+              "});\r",
+              "\r",
+              "pm.test(\"TC_28_Verify refreshToken is absent\", function(){\r",
+              "    pm.expect(data).to.not.have.property(\"refreshToken\")\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"\",\r\n  \"password\": \"\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://dummyjson.com/auth/login",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
