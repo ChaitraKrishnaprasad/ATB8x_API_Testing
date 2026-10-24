@@ -1,0 +1,203 @@
+{
+  "info": {
+    "_postman_id": "df2f9092-7ef3-44e0-bb6a-1ac784c82213",
+    "name": "TASK003_Bearer_Token_Authentication",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59057330",
+    "_collection_link": "https://go.postman.co/collection/59057330-df2f9092-7ef3-44e0-bb6a-1ac784c82213?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "TC_01_Login_Get_Token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"TC_01 - Status code is 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"TC_02 - Response time is less than 2000ms\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(2000);\r\n});\r\n\r\npm.test(\"TC_03 - Access Token exists\", function() {\r\n    const data = pm.response.json();\r\n    \r\n    pm.expect(pm.response.json().accessToken).to.not.be.null\r\n    pm.expect(data).to.have.property(\"accessToken\");\r\npm.expect(data.accessToken).to.be.a(\"string\");\r\npm.expect(data.accessToken).to.not.be.empty;\r\n});\r\n\r\npm.test(\"TC_04 - Refresh Token is valid format\", function () {\r\n    const data = pm.response.json();\r\n\r\n    pm.expect(data).to.have.property(\"refreshToken\");\r\n    pm.expect(data.refreshToken).to.be.a(\"string\");\r\n    pm.expect(data.refreshToken).to.not.be.empty;\r\n});\r\n\r\npm.collectionVariables.set(\"accessToken\", pm.response.json().accessToken);\r\n\r\n\r\n\r\n\r\n\r\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"emilys\",\r\n  \"password\": \"emilyspass\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://dummyjson.com/auth/login",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "TC_02_Get Authenticated User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"TC_01 - Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\npm.test(\"TC_02 - Response time is less than 5000ms\", function () {\n    pm.expect(pm.response.responseTime).to.be.below(5000);\n});\n\n\npm.test(\"TC_07 - Verify user id is 1\", function () {\n    pm.expect(pm.response.json().id).to.eql(1);\n});\n\npm.test(\"TC_08 -Verify username is emilys\", function(){\n    const data = pm.response.json();\n\n    pm.expect(data).to.have.property(\"email\"),\n        pm.expect(data.email).to.not.empty;\n        pm.expect(data.email).to.be.a(\"String\");\n\n});\n\npm.test(\"TC_09 - Verify the email field exists and is not empty\", function () {\n    pm.expect(pm.response.json().email).to.not.empty\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{accessToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"emilys\",\r\n  \"password\": \"emilyspass\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://dummyjson.com/auth/me",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "auth",
+            "me"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "TC_03_Missing_Bearer_Token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"tc_10 - Status code is 401\", function () {\n    pm.response.to.have.status(401);\n});\n\npm.test(\"TC_11 - Verify error message\", function () {\n    const data = pm.response.json();\n    pm.expect(data.message).to.eql(\"Access Token is required\");\n});\n\n\npm.test(\"TC_12 -Verify accessToken is absent\", function () {\n    const data = pm.response.json();\n    pm.expect(data).to.not.have.property(\"accessToken\");\n    });"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableCookies": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://dummyjson.com/auth/me",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "auth",
+            "me"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "TC_04_Invalid_Bearer_Token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"TC_13 - Status code is 401\", function () {\n    pm.response.to.have.status(401);\n});\n\npm.test(\"TC_14 - Verify error message\", function () {\n    const data = pm.response.json();\n    pm.expect(data.message).to.eql(\"Invalid/Expired Token!\");\n});\n\npm.test(\"TC_15 - Verify accessToken is absent\", function () {\n    const data = pm.response.json();\n    pm.expect(data).to.not.have.property(\"accessToken\");\n})"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "invalid_token_12345",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://dummyjson.com/auth/me",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "auth",
+            "me"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "accessToken",
+      "value": ""
+    }
+  ]
+}
